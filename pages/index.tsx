@@ -12,7 +12,9 @@ export default function Home() {
       </Head>
 
       <main className={styles.main}>
-        <FeedbackForm />
+        <div style={{ maxWidth: '500px', width: '100%' }}>
+          <FeedbackForm />
+        </div>
       </main>
 
       <footer className={styles.footer}>

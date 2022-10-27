@@ -1,39 +1,21 @@
 import { FC, useState } from 'react';
-import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
 import styles from './FeedbackForm.module.css';
 import { IFeedbackFormProps } from './FeedbackForm.props';
 import { emailRegex, phoneRegex } from '../../utils/validation';
 import Button from '../Button/Button';
+import { TCalcCostFormData } from '../../types/feedbackForm.types';
+import { sendRequestToTelegram } from '../services/api/telegramApiService';
 
-export type TCalcCostFormData = {
-  phone: string;
-  email: string;
-  requestMessage: string;
-  humanCheck: boolean;
-};
-
-export const sendRequestToTelegram = async (data: TCalcCostFormData) => {
-  const response = await fetch('/api/message', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ data }),
-  });
-  const res = await response.json();
-  return res;
-};
 
 const FeedbackForm: FC<IFeedbackFormProps> = ({ className, ...props }) => {
+  const [requestErr, setRequestErr] = useState<string>('');
   const {
     register,
     handleSubmit,
     formState: { errors },
     reset,
   } = useForm<TCalcCostFormData>();
-
-  const [requestErr, setRequestErr] = useState<string>('');
-  const router = useRouter();
-  const path = router.asPath;
 
   const onChangeHandler = () => {
     setRequestErr('');
@@ -45,7 +27,6 @@ const FeedbackForm: FC<IFeedbackFormProps> = ({ className, ...props }) => {
       if (res.status === 'success') {
         reset();
         setRequestErr('');
-        router.push(`${path.split('?')[0]}?modal=order-success`, undefined, { shallow: true });
       } else {
         setRequestErr('Произошла ошибка, попробуйте повторить запрос.');
       }
@@ -55,11 +36,11 @@ const FeedbackForm: FC<IFeedbackFormProps> = ({ className, ...props }) => {
   };
 
   return (
-    <form className={`${styles.calcCostForm__form} ${className}`} onSubmit={handleSubmit(onSubmit)} {...props}>
-      <h2 className={`${styles.calcCostForm__title}`}>Связаться со мной</h2>
-      <fieldset className={styles.calcCostForm__fieldset}>
+    <form className={`${styles.form} ${className}`} onSubmit={handleSubmit(onSubmit)} {...props}>
+      <legend className={`${styles.form__legend}`}>Связаться со мной</legend>
+      <fieldset className={styles.form__container}>
         <input
-          className={`${styles.calcCostForm__input} ${styles.calcCostForm__input_phone}`}
+          className={`${styles.form__input} ${styles.form__input_phone}`}
           type='number'
           placeholder='Контактный телефон'
           {...register('phone', {
@@ -71,9 +52,9 @@ const FeedbackForm: FC<IFeedbackFormProps> = ({ className, ...props }) => {
             },
           })}
         />
-        <span className={styles.calcCostForm__errorText}>{errors.phone?.message}</span>
+        <span className={styles.form__errorText}>{errors.phone?.message}</span>
         <input
-          className={styles.calcCostForm__input}
+          className={styles.form__input}
           type='text'
           placeholder='Электронная почта'
           {...register('email', {
@@ -85,14 +66,14 @@ const FeedbackForm: FC<IFeedbackFormProps> = ({ className, ...props }) => {
             },
           })}
         />
-        <span className={styles.calcCostForm__errorText}>{errors.email?.message}</span>
+        <span className={styles.form__errorText}>{errors.email?.message}</span>
         <textarea
-          className={styles.calcCostForm__textarea}
+          className={styles.form__textarea}
           maxLength={500}
           id='textarea'
           cols={30}
           rows={5}
-          placeholder='Напишите свой свое сообщение'
+          placeholder='Напишите свое сообщение'
           {...register('requestMessage', {
             required: 'Это поле обязательно.',
             onChange: onChangeHandler,
@@ -102,23 +83,26 @@ const FeedbackForm: FC<IFeedbackFormProps> = ({ className, ...props }) => {
             },
           })}
         />
-        <span className={styles.calcCostForm__errorText}>{errors.requestMessage?.message}</span>
-        <div>
+        <span className={styles.form__errorText}>{errors.requestMessage?.message}</span>
+        
+        <label htmlFor='humanCheck'>
           <input
             id='humanCheck'
             type='checkbox'
-            className={`${styles.calcCostForm__checkbox}`}
+            className={`${styles.form__checkbox}`}
             {...register('humanCheck', {
               required: 'Это поле обязательно.',
             })}
           />
-          <label htmlFor='humanCheck'>Я человек</label>
-        </div>
+          Я человек
+        </label>
 
-        <span className={styles.calcCostForm__errorText}>{errors.humanCheck?.message}</span>
-        <span className={styles.calcCostForm__errorText}>{requestErr}</span>
+        <span className={styles.form__errorText}>{errors.humanCheck?.message}</span>
+        <span className={styles.form__errorText}>{requestErr}</span>
       </fieldset>
-      <Button type='submit' variant='primary' size='m' fullWidth>Отправить сообщение</Button>
+      <Button type='submit' variant='primary' size='m' fullWidth>
+        Отправить сообщение
+      </Button>
     </form>
   );
 };

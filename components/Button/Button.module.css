@@ -8,6 +8,11 @@
   line-height: 1rem;
 }
 
+.button:focus, .button:focus-visible {
+  border: 1px solid var(--accent-light-blue);
+  outline: none;
+}
+
 /*  width */
 
 .fullWidth {
