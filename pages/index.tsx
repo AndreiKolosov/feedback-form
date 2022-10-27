@@ -12,7 +12,7 @@ export default function Home() {
       </Head>
 
       <main className={styles.main}>
-        <div style={{ maxWidth: '500px', width: '100%' }}>
+        <div style={{ maxWidth: '500px', width: '100%', border: '1px solid green' }}>
           <FeedbackForm />
         </div>
       </main>
