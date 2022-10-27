@@ -68,10 +68,6 @@
 
 
 
-.form__checkbox_dark > span {
-	color: var(--grey-800);
-}
-
 /* Remove Phone-input Arrows */
 .form__input_phone::-webkit-outer-spin-button,
 .form__input_phone::-webkit-inner-spin-button {

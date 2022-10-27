@@ -5,7 +5,7 @@ import { IFeedbackFormProps } from './FeedbackForm.props';
 import { emailRegex, phoneRegex } from '../../utils/validation';
 import Button from '../Button/Button';
 import { TCalcCostFormData } from '../../types/feedbackForm.types';
-import { sendRequestToTelegram } from '../services/api/telegramApiService';
+import { sendRequestToTelegram } from '../../services/api/telegramApiService';
 
 
 const FeedbackForm: FC<IFeedbackFormProps> = ({ className, ...props }) => {
