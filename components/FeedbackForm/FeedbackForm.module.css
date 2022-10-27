@@ -1,0 +1,239 @@
+.calcCostForm__form {
+	display: flex;
+	flex-direction: column;
+
+	width: 100%;
+
+	max-width: 478px;
+	padding-top: 68px;
+
+	gap: 50px;
+}
+
+.calcCostForm__title {
+	font-family: var(--Sansation);
+	font-size: 25px;
+}
+
+.calcCostForm__errorText {
+	margin-bottom: 3px;
+
+	color: var(--error-strong);
+	font-weight: 400;
+
+	font-size: 14px;
+	min-height: 14px;
+	line-height: 14px;
+}
+
+h2.calcCostForm__title_dark {
+	color: #141319;
+}
+
+h2.calcCostForm__title_light {
+	color: #13C9DD;
+}
+
+.calcCostForm__input,
+.calcCostForm__textarea {
+	box-sizing: border-box;
+	margin-bottom: 3px;
+	width: 100%;
+	padding: 12px 20px;
+
+	transition: 0.3s;
+
+	border: 1px solid #D6D6D6;
+	border-radius: 5px;
+	outline: none;
+
+	font-size: 17px;
+}
+
+.calcCostForm__textarea {
+	resize: none;
+}
+
+.calcCostForm__input:focus,
+.calcCostForm__textarea:focus {
+	border-color: #3B3B3B;
+}
+
+.calcCostForm__input::placeholder,
+.calcCostForm__textarea::placeholder {
+	font-family: Roboto, Arial, sans-serif;
+	font-size: 17px;
+	font-weight: 400;
+	line-height: 23px;
+}
+
+.calcCostForm__fieldset {
+	position: relative;
+
+	display: flex;
+	flex-direction: column;
+
+	margin: 0;
+	padding: 0;
+
+	border: none;
+	/* gap: 20px; */
+}
+
+.calcCostForm__fileInput {
+	display: flex;
+	flex-direction: column;
+	gap: 24px;
+}
+
+.calcCostForm__fileContainer {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 10px;
+}
+
+.calcCostForm__fileCaption {
+	display: flex;
+	align-items: center;
+
+	width: 100%;
+	max-width: 238px;
+	margin: 0;
+
+	font-family: Roboto, Arial, sans-serif;
+	font-size: 12px;
+	font-weight: 300;
+}
+
+.calcCostForm__fileCaption_light {
+	color: #FEFEFE;
+}
+
+.calcCostForm__fileCaption_dark {
+	color: #141319;
+}
+
+.calcCostForm__fileCaption::before {
+	content: "";
+
+	background-repeat: no-repeat;
+}
+
+.calcCostForm__fileCaption_icon_clip::before {
+	width: 20px;
+	height: 20px;
+
+	content: "";
+
+	background-image: url("/clip.svg");
+}
+
+.calcCostForm__fileCaption_icon_archive::before {
+	width: 20px;
+	height: 20px;
+
+	content: "";
+
+	background-image: url("/archive.svg");
+}
+
+.calcCostForm__fileCaption_icon_svg::before {
+	width: 20px;
+	height: 20px;
+
+	content: "";
+
+	background-image: url("/pdf.svg");
+}
+
+.calcCostForm__addFileInput {
+	display: flex;
+	align-items: center;
+
+	box-sizing: border-box;
+	padding: 10px 6px;
+
+	cursor: pointer;
+	transition: 0.3s;
+
+	border-radius: 5px;
+	background-color: transparent;
+	gap: 6px;
+
+	font-size: 16px;
+}
+
+.calcCostForm__addFileInput_light {
+	color: #FEFEFE;
+
+	border: 1px solid #FEFEFE;
+}
+
+.calcCostForm__addFileInput_dark {
+	color: #13C9DD;
+
+	border: 1px solid #13C9DD;
+}
+
+.calcCostForm__addFileInput:hover {
+	opacity: 0.8;
+}
+
+.calcCostForm__addedFilesList {
+	display: flex;
+	flex-direction: column;
+
+	margin: 0;
+	padding: 0;
+
+	list-style: none;
+	gap: 10px;
+}
+
+.calcCostForm__addedFilesItem {
+	display: flex;
+	align-items: center;
+	gap: 12px;
+}
+
+.calcCostForm__submitButton {
+	box-sizing: border-box;
+	width: 100%;
+	max-width: 476px;
+	padding: 18px 20px;
+
+	cursor: pointer;
+	transition: 0.3s;
+	text-align: center;
+
+	color: #FEFEFE;
+	border: none;
+	border-radius: 5px;
+	background-color: #05B3C6;
+	box-shadow: 0 0 20px #05B3C6;
+
+	font-family: Roboto, Arial, sans-serif;
+	font-size: 20px;
+	font-weight: 500;
+	line-height: 23px;
+}
+
+.calcCostForm__submitButton:hover {
+	opacity: 0.8;
+}
+
+.calcCostForm__checkbox_dark > span {
+	color: var(--grey-800);
+}
+
+/* Remove Phone-input Arrows */
+.calcCostForm__input_phone::-webkit-outer-spin-button,
+.calcCostForm__input_phone::-webkit-inner-spin-button {
+  appearance: none;
+  margin: 0;
+}
+
+.calcCostForm__input_phone[type=number] {
+  appearance: textfield;
+}
