@@ -7,6 +7,7 @@ import Button from '../Button/Button';
 import { TCalcCostFormData } from '../../types/feedbackForm.types';
 import { sendRequestToTelegram } from '../../services/api/telegramApiService';
 import CustomInput from '../CustomInput/CustomInput';
+import CustomTextArea from '../CustomTextArea/CustomTextArea';
 
 
 const FeedbackForm: FC<IFeedbackFormProps> = ({ className, ...props }) => {
@@ -52,10 +53,9 @@ const FeedbackForm: FC<IFeedbackFormProps> = ({ className, ...props }) => {
               value: phoneRegex,
               message: 'Введите корректный номер телефона.',
             },
-            
           })}
         />
-        <CustomInput 
+        <CustomInput
           isValidated
           errors={errors.email}
           type='text'
@@ -69,10 +69,10 @@ const FeedbackForm: FC<IFeedbackFormProps> = ({ className, ...props }) => {
             },
           })}
         />
-        <textarea
-          className={styles.form__textarea}
+        <CustomTextArea
+          errors={errors.requestMessage}
           maxLength={500}
-          id='textarea'
+          isValidated
           cols={30}
           rows={5}
           placeholder='Напишите свое сообщение'
@@ -85,8 +85,6 @@ const FeedbackForm: FC<IFeedbackFormProps> = ({ className, ...props }) => {
             },
           })}
         />
-        <span className={styles.form__errorText}>{errors.requestMessage?.message}</span>
-
         <label htmlFor='humanCheck'>
           <input
             id='humanCheck'

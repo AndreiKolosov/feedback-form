@@ -9,22 +9,23 @@ const CustomInput: FC<ICustomInputProps> = forwardRef(({
   onBlur,
   placeholder,
   type = 'text',
+  disabled,
   value,
   errors,
-  isValidated,
   inputExtraClass,
+  isValidated,
   className,
-  ...props
 }, ref: LegacyRef<HTMLInputElement>) => {
   return (
-    <label htmlFor={name} className={cx(styles.wrapper, className)} {...props}>
+    <label htmlFor={`${name}Input`} className={cx(styles.wrapper, className)}>
       <input
         value={value}
+        disabled={disabled}
         type={type}
         className={cx(styles.input, inputExtraClass, { [styles['input_type_number']]: type === 'number' })}
         ref={ref}
         name={name}
-        id={name}
+        id={`${name}Input`}
         placeholder={placeholder}
         onChange={onChange}
         onBlur={onBlur}
