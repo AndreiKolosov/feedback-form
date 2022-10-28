@@ -16,7 +16,6 @@ export default function Home() {
         <div style={{ maxWidth: '500px', width: '100%', border: '1px solid green' }}>
           <FeedbackForm />
         </div>
-          <CustomInput type='number' name='test' onChange={() => {}} placeholder='some text'/>
       </main>
 
       <footer className={styles.footer}>

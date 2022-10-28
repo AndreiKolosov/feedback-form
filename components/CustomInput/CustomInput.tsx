@@ -10,7 +10,8 @@ const CustomInput: FC<ICustomInputProps> = forwardRef(({
   placeholder,
   type = 'text',
   value,
-  validationField,
+  errors,
+  isValidated,
   inputExtraClass,
   className,
   ...props
@@ -20,11 +21,7 @@ const CustomInput: FC<ICustomInputProps> = forwardRef(({
       <input
         value={value}
         type={type}
-        className={cx(
-          styles.input,
-          inputExtraClass,
-          {[styles['input_type_number']]: type === 'number'}
-        )}
+        className={cx(styles.input, inputExtraClass, { [styles['input_type_number']]: type === 'number' })}
         ref={ref}
         name={name}
         id={name}
@@ -32,7 +29,7 @@ const CustomInput: FC<ICustomInputProps> = forwardRef(({
         onChange={onChange}
         onBlur={onBlur}
       />
-      {validationField}
+      {isValidated && <span className={styles.message}>{errors?.message}</span>}
     </label>
   );
 });

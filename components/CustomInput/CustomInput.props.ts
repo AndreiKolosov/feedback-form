@@ -1,13 +1,16 @@
-import { ChangeEvent, ReactElement } from 'react';
+import { ChangeEvent } from 'react';
+import { FieldError } from 'react-hook-form';
+
 
 export interface ICustomInputProps {
   name: string;
-  onChange?: () => void | ((e: ChangeEvent) => void);
-  onBlur?: () => void | ((e: ChangeEvent) => void);
+  onChange?: ((e: ChangeEvent<HTMLInputElement>) => void);
+  onBlur?: ((e: ChangeEvent<HTMLInputElement>) => void);
   placeholder?: string;
   type: 'text' | 'number';
   value?: string | number;
   className?: string;
   inputExtraClass?: string;
-  validationField?: ReactElement;
+  isValidated?: boolean; 
+  errors?: FieldError;
 }

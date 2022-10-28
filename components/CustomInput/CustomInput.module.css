@@ -38,3 +38,14 @@
 .input_type_number[type='number'] {
   appearance: textfield;
 }
+
+.message {
+	box-sizing: border-box;
+	padding: 0 0 0 10px;	
+	font-weight: 400;
+	vertical-align: middle;
+	font-size: 14px;
+	min-height: 20px;
+	line-height: 14px;
+	color: red;
+}

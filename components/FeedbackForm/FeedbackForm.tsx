@@ -6,6 +6,7 @@ import { emailRegex, phoneRegex } from '../../utils/validation';
 import Button from '../Button/Button';
 import { TCalcCostFormData } from '../../types/feedbackForm.types';
 import { sendRequestToTelegram } from '../../services/api/telegramApiService';
+import CustomInput from '../CustomInput/CustomInput';
 
 
 const FeedbackForm: FC<IFeedbackFormProps> = ({ className, ...props }) => {
@@ -39,9 +40,10 @@ const FeedbackForm: FC<IFeedbackFormProps> = ({ className, ...props }) => {
     <form className={`${styles.form} ${className}`} onSubmit={handleSubmit(onSubmit)} {...props}>
       <legend className={`${styles.form__legend}`}>Связаться со мной</legend>
       <fieldset className={styles.form__container}>
-        <input
-          className={`${styles.form__input} ${styles.form__input_phone}`}
+        <CustomInput
           type='number'
+          errors={errors.phone}
+          isValidated
           placeholder='Контактный телефон'
           {...register('phone', {
             required: 'Это поле обязательно.',
@@ -50,11 +52,12 @@ const FeedbackForm: FC<IFeedbackFormProps> = ({ className, ...props }) => {
               value: phoneRegex,
               message: 'Введите корректный номер телефона.',
             },
+            
           })}
         />
-        <span className={styles.form__errorText}>{errors.phone?.message}</span>
-        <input
-          className={styles.form__input}
+        <CustomInput 
+          isValidated
+          errors={errors.email}
           type='text'
           placeholder='Электронная почта'
           {...register('email', {
@@ -66,7 +69,6 @@ const FeedbackForm: FC<IFeedbackFormProps> = ({ className, ...props }) => {
             },
           })}
         />
-        <span className={styles.form__errorText}>{errors.email?.message}</span>
         <textarea
           className={styles.form__textarea}
           maxLength={500}
@@ -84,7 +86,7 @@ const FeedbackForm: FC<IFeedbackFormProps> = ({ className, ...props }) => {
           })}
         />
         <span className={styles.form__errorText}>{errors.requestMessage?.message}</span>
-        
+
         <label htmlFor='humanCheck'>
           <input
             id='humanCheck'
