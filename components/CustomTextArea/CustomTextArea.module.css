@@ -28,17 +28,6 @@
 	font-weight: 400;
 	line-height: 23px;
 }
-
-.input_type_number::-webkit-outer-spin-button,
-.input_type_number::-webkit-inner-spin-button {
-  appearance: none;
-  margin: 0;
-}
-
-.input_type_number[type='number'] {
-  appearance: textfield;
-}
-
 .message {
 	box-sizing: border-box;
 	padding: 0 0 0 10px;	

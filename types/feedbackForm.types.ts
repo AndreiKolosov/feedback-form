@@ -1,4 +1,4 @@
-export type TCalcCostFormData = {
+export type TFormData = {
   phone: string;
   email: string;
   requestMessage: string;

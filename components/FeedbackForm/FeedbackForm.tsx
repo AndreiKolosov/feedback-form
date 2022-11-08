@@ -1,44 +1,49 @@
 import { FC, useState } from 'react';
+import cn from 'classnames'
 import { useForm } from 'react-hook-form';
 import styles from './FeedbackForm.module.css';
 import { IFeedbackFormProps } from './FeedbackForm.props';
 import { emailRegex, phoneRegex } from '../../utils/validation';
 import Button from '../Button/Button';
-import { TCalcCostFormData } from '../../types/feedbackForm.types';
+import { TFormData } from '../../types/feedbackForm.types';
 import { sendRequestToTelegram } from '../../services/api/telegramApiService';
 import CustomInput from '../CustomInput/CustomInput';
 import CustomTextArea from '../CustomTextArea/CustomTextArea';
-
+import CustomCheckbox from '../CustomCheckbox/CustomCheckbox';
 
 const FeedbackForm: FC<IFeedbackFormProps> = ({ className, ...props }) => {
-  const [requestErr, setRequestErr] = useState<string>('');
+  const [isFailed, setIsFailed] = useState<boolean>(false);
+  const [responseMessage, setResponseMessage] = useState<string>('');
+
   const {
     register,
     handleSubmit,
     formState: { errors },
     reset,
-  } = useForm<TCalcCostFormData>();
+  } = useForm<TFormData>();
 
   const onChangeHandler = () => {
-    setRequestErr('');
+    setResponseMessage('');
   };
 
-  const onSubmit = async (data: TCalcCostFormData) => {
+  const onSubmit = async (data: TFormData) => {
     try {
       const res = await sendRequestToTelegram(data);
       if (res.status === 'success') {
         reset();
-        setRequestErr('');
+        setIsFailed(false);
+        setResponseMessage('Ваше сообщение успешно отправлено!');
       } else {
-        setRequestErr('Произошла ошибка, попробуйте повторить запрос.');
+        setIsFailed(true);
+        setResponseMessage('Произошла ошибка, попробуйте повторить запрос.');
       }
     } catch (error: any) {
-      setRequestErr('Произошла ошибка, попробуйте повторить запрос.');
+      setResponseMessage('Произошла ошибка, попробуйте повторить запрос.');
     }
   };
 
   return (
-    <form className={`${styles.form} ${className}`} onSubmit={handleSubmit(onSubmit)} {...props}>
+    <form className={cn(styles.form, className)} onSubmit={handleSubmit(onSubmit)} {...props}>
       <legend className={`${styles.form__legend}`}>Связаться со мной</legend>
       <fieldset className={styles.form__container}>
         <CustomInput
@@ -47,11 +52,11 @@ const FeedbackForm: FC<IFeedbackFormProps> = ({ className, ...props }) => {
           isValidated
           placeholder='Контактный телефон'
           {...register('phone', {
-            required: 'Это поле обязательно.',
+            required: 'Это поле необходимо заполнить.',
             onChange: onChangeHandler,
             pattern: {
               value: phoneRegex,
-              message: 'Введите корректный номер телефона.',
+              message: 'Пожалуйста, введите корректный номер телефона.',
             },
           })}
         />
@@ -61,11 +66,11 @@ const FeedbackForm: FC<IFeedbackFormProps> = ({ className, ...props }) => {
           type='text'
           placeholder='Электронная почта'
           {...register('email', {
-            required: 'Это поле обязательно.',
+            required: 'Это поле необходимо заполнить.',
             onChange: onChangeHandler,
             pattern: {
               value: emailRegex,
-              message: 'Введите корректный email.',
+              message: 'Пожалуйста, введите корректный email.',
             },
           })}
         />
@@ -77,7 +82,7 @@ const FeedbackForm: FC<IFeedbackFormProps> = ({ className, ...props }) => {
           rows={5}
           placeholder='Напишите свое сообщение'
           {...register('requestMessage', {
-            required: 'Это поле обязательно.',
+            required: 'Это поле необходимо заполнить.',
             onChange: onChangeHandler,
             maxLength: {
               value: 500,
@@ -85,20 +90,16 @@ const FeedbackForm: FC<IFeedbackFormProps> = ({ className, ...props }) => {
             },
           })}
         />
-        <label htmlFor='humanCheck'>
-          <input
-            id='humanCheck'
-            type='checkbox'
-            className={`${styles.form__checkbox}`}
-            {...register('humanCheck', {
-              required: 'Это поле обязательно.',
-            })}
-          />
+        <CustomCheckbox
+          isValidated
+          errors={errors.humanCheck}
+          {...register('humanCheck', {
+            required: 'Поставьте галочку если вы не робот = )',
+          })}
+        >
           Я человек
-        </label>
-
-        <span className={styles.form__errorText}>{errors.humanCheck?.message}</span>
-        <span className={styles.form__errorText}>{requestErr}</span>
+        </CustomCheckbox>
+        <span className={cn(styles.form__responseMessage, { [styles.form__responseMessage_err]: isFailed })}>{responseMessage}</span>
       </fieldset>
       <Button type='submit' variant='primary' size='m' fullWidth>
         Отправить сообщение
