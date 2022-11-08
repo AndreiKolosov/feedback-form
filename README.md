@@ -1,34 +1,38 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Форма обратной связи
+![preview](readmeStatic/readme-cover.png)
 
-## Getting Started
+Небольшая форма обратной связи для отправки собщений с сайта в телеграм-группу или в телеграм-бота.
+В зависимости от выбраного id чата можно настроить получение ссобщений в группу от лица бота, либо, присылать сообщения напрямую боту.
 
-First, run the development server:
+## Суть и структура проекта:
+Этот проект изначально задумывался как мини-библиотека реакт-компонентов для более быстрого создания собственных приложений. Поэтому папка components переодически пополняется новыми компонентами, не используемыми в данном проекте. 
+Для работы с формами используется библиотека React Hook Form. 
+Приложение написано на Next.js
+Интерес самой формы заключается в том, что, с помощью next-server и next api можно отпраить сообщение с сайта в телеграм, не выствив при этом напоказ конфиденциальную информацию - токен бота и id чата. Все происходит 'под капотом'.
 
-```bash
-npm run dev
-# or
-yarn dev
-```
+## Настройка и использование формы
+Для того чтобы интегрировать форму в свой проект необходимо сделать следующее:
+  - Токен и id чата хранятся в переменных окружения, поэтому для работы приложения создадим файл .env,
+  в который позже сохраним необходимые нам переменные. 
+  - Создадим самого простого телеграм-бота использую @BotFather (главный телеграм бот по созданию ботов =) ). Нужно найти его как обычного пользователя и далле следовать инструкциям этого бота. 
+  - При создании бота нам выдадут его токен. Берем его и сохраняем в переменную <code>NEXT_PUBLIC_BOT_TOKEN</code>.
+  - Для получения сообщений от лица бота в группу:
+    1. Создаем группу и приглашаем туда нашего бота по нику.
+    2. Пишем боту команду /join @Название чата
+    3. В адресной строке браузера пишем https://api.telegram.org/botХХХХХХХ/getUpdates,
+      где ХХХХХХ меняем на токен бота, полученный раннее. Если все сделали правильно, то увидим на странице объект, в котором нас интересует поле <code>"chat"</code>. Забираем id и сохраняем его в переменную <code>NEXT_PUBLIC_CHAT_ID</code>.
+  - Для получения сообщений непосредственно в бота:
+    1. Пишем боту команду /join @Ваш ник-нейм
+    2. Выполняем пункт 3, описаный выше.
+  После этих шагов форма готова к использованию.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+## Технологии:
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+* React
+* Next.js
+* TypeScript
+* React Hook Form
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+### Автор
+* Колосов Андрей [&rsaquo; GitHub &lsaquo;](https://github.com/AndreiKolosov)
